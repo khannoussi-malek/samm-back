@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres_db
+    ports:
+      - '5000:5432'
+    environment:
+      POSTGRES_DB: MiniProjetDB
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Sirine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+volumes:
+  postgres_data:
