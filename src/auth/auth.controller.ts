@@ -18,10 +18,8 @@ export class AuthController {
         }
         throw new UnauthorizedException('Invalid credentials');
     }
-    @Get('login')
-    findAll() {
-      return {name:"sirine"};
-    }
+    
+    
     @Get('me')
     async getMe(@Headers(('authorization')) authorization: string) {
         const token = authorization.split(' ')[1];
@@ -31,9 +29,14 @@ export class AuthController {
         }
         return user;
     }
-    @Post('signup')
-    async signup(@Body() userSignupDto: CreateUserDto) {
-        return this.authService.signup(userSignupDto);
+    @Post('signupstudent')
+    async signupStudent(@Body() userSignupDto: CreateUserDto) {
+        return this.authService.signup(userSignupDto,"Student");
     }
+    @Post('signupTeacher')
+    async signupTeacher(@Body() userSignupDto: CreateUserDto) {
+        return this.authService.signup(userSignupDto,"teacher");
+    }
+  
   
 }

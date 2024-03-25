@@ -42,9 +42,9 @@ export class CreateUserDto {
   photo?: string;
 
   @IsString()
- 
+  @IsOptional()
   @ApiProperty()
-  CIN: string;
+  CIN?: string;
 
   @IsString()
   @IsOptional()
@@ -53,8 +53,9 @@ export class CreateUserDto {
   passport?:string
    
   @IsString()
+  @IsOptional()
   @ApiProperty()
-  @IsNotEmpty()
-  role:'teacher' | 'Student'|'Admin'
+  
+  role?:'teacher' | 'Student'|'Admin'
 }
 
