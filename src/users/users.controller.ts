@@ -12,10 +12,10 @@ export class UsersController {
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     try {
-      console.log('Creating user with data:', createUserDto);
+      
       return await this.usersService.create(createUserDto);
     } catch (error) {
-      console.error('Error creating user:', error);
+      
       throw new InternalServerErrorException('Failed to create user.');
     }
   }
