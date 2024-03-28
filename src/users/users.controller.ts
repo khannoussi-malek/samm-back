@@ -8,6 +8,7 @@ import {
   Delete,
   InternalServerErrorException,
   Patch,
+  UseGuards,
 } from '@nestjs/common';
 
 import { CreateUserDto } from './dto/create-user.dto';
@@ -15,6 +16,9 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './users.service';
 import { User } from './entities/user.entity';
 import { ApiTags } from '@nestjs/swagger';
+import { Roles } from 'src/auth/guards/roles.decorator';
+import { Role } from 'src/auth/guards/roles.enum';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 @ApiTags('users')
 @Controller('users')
@@ -29,8 +33,10 @@ export class UsersController {
       throw new InternalServerErrorException('Failed to create user.');
     }
   }
-
+ 
   @Get()
+  @Roles(Role.Student) // Spécifie que seul un utilisateur avec le rôle Admin peut accéder à cette route
+  @UseGuards(RolesGuard)
   findAll() {
     return this.usersService.findAll();
   }
