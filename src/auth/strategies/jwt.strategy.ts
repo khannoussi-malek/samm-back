@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { AuthService } from '../auth.service';
 import { jwtConstants } from './constant';
-
+import { configDotenv } from 'dotenv'
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
     constructor(private readonly authService: AuthService) {
@@ -12,8 +12,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
             ignoreExpiration: false,
             secretOrKey: jwtConstants.secret,
         });
+        configDotenv()
+    
     }
-
+   
     async validate(payload: any) {
         return { userId: payload.sub, email: payload.email, role: payload.role };
     }
