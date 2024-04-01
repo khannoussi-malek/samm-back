@@ -1,26 +1,39 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePotfolioDto } from './dto/create-potfolio.dto';
 import { UpdatePotfolioDto } from './dto/update-potfolio.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Potfolio } from './entities/potfolio.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class PotfolioService {
-  create(createPotfolioDto: CreatePotfolioDto) {
-    return 'This action adds a new potfolio';
+  constructor(
+    @InjectRepository(Potfolio)
+    private readonly portfolioRepository: Repository<Potfolio>,
+  ) {}
+
+  async create(createPotfolioDto: CreatePotfolioDto) {
+    const portfolio = this.portfolioRepository.create(createPotfolioDto);
+    return this.portfolioRepository.save(portfolio);
   }
 
-  findAll() {
-    return `This action returns all potfolio`;
+  async findAll(): Promise<Potfolio[]> {
+    return this.portfolioRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} potfolio`;
+  async findOne(id: number): Promise<Potfolio> {
+    return this.portfolioRepository.findOne({ where: { id } });
   }
 
-  update(id: number, updatePotfolioDto: UpdatePotfolioDto) {
-    return `This action updates a #${id} potfolio`;
+  async update(
+    id: number,
+    updatePotfolioDto: UpdatePotfolioDto,
+  ): Promise<Potfolio> {
+    await this.portfolioRepository.update(id, updatePotfolioDto);
+    return this.portfolioRepository.findOne({ where: { id } });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} potfolio`;
+  async remove(id: number): Promise<void> {
+    await this.portfolioRepository.delete(id);
   }
 }

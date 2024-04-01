@@ -1,9 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { PotfolioService } from './potfolio.service';
 import { CreatePotfolioDto } from './dto/create-potfolio.dto';
 import { UpdatePotfolioDto } from './dto/update-potfolio.dto';
-
-@Controller('potfolio')
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('portfolios')
+@Controller('portfolios')
 export class PotfolioController {
   constructor(private readonly potfolioService: PotfolioService) {}
 
@@ -23,7 +32,10 @@ export class PotfolioController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePotfolioDto: UpdatePotfolioDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updatePotfolioDto: UpdatePotfolioDto,
+  ) {
     return this.potfolioService.update(+id, updatePotfolioDto);
   }
 

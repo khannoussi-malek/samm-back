@@ -3,7 +3,6 @@ import {
   Get,
   Post,
   Body,
-  Put,
   Param,
   Delete,
   InternalServerErrorException,
@@ -33,9 +32,9 @@ export class UsersController {
       throw new InternalServerErrorException('Failed to create user.');
     }
   }
- 
+
   @Get()
-  @Roles(Role.Student) // Spécifie que seul un utilisateur avec le rôle Admin peut accéder à cette route
+  @Roles(Role.Admin) // Spécifie que seul un utilisateur avec le rôle Admin peut accéder à cette route
   @UseGuards(RolesGuard)
   findAll() {
     return this.usersService.findAll();

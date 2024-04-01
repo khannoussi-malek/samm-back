@@ -1,4 +1,3 @@
-
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { APP_GUARD } from '@nestjs/core';
@@ -8,21 +7,27 @@ import { ChapterModule } from './chapter/chapter.module';
 import { MajorModule } from './major/major.module';
 import { SpecialityModule } from './speciality/speciality.module';
 import { CourseFileModule } from './course-file/course-file.module';
-import { ClassroomModule } from './classroom/classroom.module';
-import { SessionModule } from './session/session.module';
+
 import { GroupModule } from './group/group.module';
-import { SubjectInfoModule } from './subject-info/subject-info.module';
+
 import { PotfolioModule } from './potfolio/potfolio.module';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import {TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/entities/user.entity';
 import { UserModule } from './users/users.module';
-import { StudentModule } from './student/student.module';
-import { TeacherModule } from './teacher/teacher.module';
+
 import { AuthModule } from './auth/auth.module';
 
 import { AuthMiddleware } from './auth/middleware/auth.middleware';
 import { RolesGuard } from './auth/guards/roles.guard';
+import { Chapter } from './chapter/entities/chapter.entity';
+import { CourseFile } from './course-file/entities/course-file.entity';
+import { Departement } from './departement/entities/departement.entity';
+import { Group } from './group/entities/group.entity';
+import { Major } from './major/entities/major.entity';
+import { Potfolio } from './potfolio/entities/potfolio.entity';
+import { Speciality } from './speciality/entities/speciality.entity';
+import { Subject } from './subject/entities/subject.entity';
 
 @Module({
   imports: [
@@ -33,25 +38,54 @@ import { RolesGuard } from './auth/guards/roles.guard';
       username: 'postgres',
       password: 'Sirine',
       database: 'MiniProjetDB',
-      entities: [User],
+      entities: [
+        User,
+        Chapter,
+        CourseFile,
+        Departement,
+        Group,
+        Major,
+        Potfolio,
+        Speciality,
+        Subject,
+      ],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([User]),
-  UserModule, 
-  SubjectModule, 
-  DepartementModule, 
-  ChapterModule, 
-  MajorModule, 
-  SpecialityModule, CourseFileModule, ClassroomModule, SessionModule, GroupModule, SubjectInfoModule, PotfolioModule, StudentModule, TeacherModule, AuthModule],
-  controllers: [AppController],
-  providers: [AppService, {
-    provide: APP_GUARD,
-    useClass: RolesGuard,
-  },],
-  
+    TypeOrmModule.forFeature([
+      User,
+      Chapter,
+      CourseFile,
+      Departement,
+      Group,
+      Major,
+      Potfolio,
+      Speciality,
+      Subject,
+    ]),
+    UserModule,
+    SubjectModule,
+    DepartementModule,
+    ChapterModule,
+    MajorModule,
+    SpecialityModule,
+    CourseFileModule,
 
+    GroupModule,
+
+    PotfolioModule,
+    AuthModule,
+  ],
+  controllers: [AppController],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(AuthMiddleware).forRoutes('*'); // Appliquer le middleware à toutes les routes
-  }}
+  }
+}

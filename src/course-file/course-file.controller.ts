@@ -1,9 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { CourseFileService } from './course-file.service';
 import { CreateCourseFileDto } from './dto/create-course-file.dto';
 import { UpdateCourseFileDto } from './dto/update-course-file.dto';
-
-@Controller('course-file')
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('course-files')
+@Controller('course-files')
 export class CourseFileController {
   constructor(private readonly courseFileService: CourseFileService) {}
 
@@ -23,7 +32,10 @@ export class CourseFileController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCourseFileDto: UpdateCourseFileDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateCourseFileDto: UpdateCourseFileDto,
+  ) {
     return this.courseFileService.update(+id, updateCourseFileDto);
   }
 

@@ -1,9 +1,19 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ChapterService } from './chapter.service';
 import { CreateChapterDto } from './dto/create-chapter.dto';
 import { UpdateChapterDto } from './dto/update-chapter.dto';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('chapter')
+@ApiTags('chapters')
+@Controller('chapters')
 export class ChapterController {
   constructor(private readonly chapterService: ChapterService) {}
 

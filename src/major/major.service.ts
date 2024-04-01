@@ -1,26 +1,36 @@
 import { Injectable } from '@nestjs/common';
 import { CreateMajorDto } from './dto/create-major.dto';
 import { UpdateMajorDto } from './dto/update-major.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Major } from './entities/major.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class MajorService {
-  create(createMajorDto: CreateMajorDto) {
-    return 'This action adds a new major';
+  constructor(
+    @InjectRepository(Major)
+    private readonly majorRepository: Repository<Major>,
+  ) {}
+
+  async create(createMajorDto: CreateMajorDto) {
+    const major = this.majorRepository.create(createMajorDto);
+    return this.majorRepository.save(major);
   }
 
-  findAll() {
-    return `This action returns all major`;
+  async findAll(): Promise<Major[]> {
+    return this.majorRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} major`;
+  async findOne(id: number): Promise<Major> {
+    return this.majorRepository.findOne({ where: { id } });
   }
 
-  update(id: number, updateMajorDto: UpdateMajorDto) {
-    return `This action updates a #${id} major`;
+  async update(id: number, updateMajorDto: UpdateMajorDto): Promise<Major> {
+    await this.majorRepository.update(id, updateMajorDto);
+    return this.majorRepository.findOne({ where: { id } });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} major`;
+  async remove(id: number): Promise<void> {
+    await this.majorRepository.delete(id);
   }
 }

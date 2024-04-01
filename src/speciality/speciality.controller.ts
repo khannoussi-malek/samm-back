@@ -1,9 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { SpecialityService } from './speciality.service';
 import { CreateSpecialityDto } from './dto/create-speciality.dto';
 import { UpdateSpecialityDto } from './dto/update-speciality.dto';
-
-@Controller('speciality')
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('specialities')
+@Controller('specialities')
 export class SpecialityController {
   constructor(private readonly specialityService: SpecialityService) {}
 
@@ -23,7 +32,10 @@ export class SpecialityController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSpecialityDto: UpdateSpecialityDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateSpecialityDto: UpdateSpecialityDto,
+  ) {
     return this.specialityService.update(+id, updateSpecialityDto);
   }
 

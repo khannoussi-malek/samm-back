@@ -1,26 +1,39 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCourseFileDto } from './dto/create-course-file.dto';
 import { UpdateCourseFileDto } from './dto/update-course-file.dto';
+import { CourseFile } from './entities/course-file.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class CourseFileService {
-  create(createCourseFileDto: CreateCourseFileDto) {
-    return 'This action adds a new courseFile';
+  constructor(
+    @InjectRepository(CourseFile)
+    private readonly courseFileRepository: Repository<CourseFile>,
+  ) {}
+
+  async create(createCourseFileDto: CreateCourseFileDto) {
+    const coursefile = this.courseFileRepository.create(createCourseFileDto);
+    return this.courseFileRepository.save(coursefile);
   }
 
-  findAll() {
-    return `This action returns all courseFile`;
+  async findAll(): Promise<CourseFile[]> {
+    return this.courseFileRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} courseFile`;
+  async findOne(id: number): Promise<CourseFile> {
+    return this.courseFileRepository.findOne({ where: { id } });
   }
 
-  update(id: number, updateCourseFileDto: UpdateCourseFileDto) {
-    return `This action updates a #${id} courseFile`;
+  async update(
+    id: number,
+    updateCourseFileDto: UpdateCourseFileDto,
+  ): Promise<CourseFile> {
+    await this.courseFileRepository.update(id, updateCourseFileDto);
+    return this.courseFileRepository.findOne({ where: { id } });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} courseFile`;
+  async remove(id: number): Promise<void> {
+    await this.courseFileRepository.delete(id);
   }
 }

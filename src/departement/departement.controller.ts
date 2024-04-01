@@ -1,9 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { DepartementService } from './departement.service';
 import { CreateDepartementDto } from './dto/create-departement.dto';
 import { UpdateDepartementDto } from './dto/update-departement.dto';
-
-@Controller('departement')
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('departments')
+@Controller('departements')
 export class DepartementController {
   constructor(private readonly departementService: DepartementService) {}
 
@@ -23,7 +32,10 @@ export class DepartementController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDepartementDto: UpdateDepartementDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateDepartementDto: UpdateDepartementDto,
+  ) {
     return this.departementService.update(+id, updateDepartementDto);
   }
 

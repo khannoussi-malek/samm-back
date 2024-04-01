@@ -1,26 +1,39 @@
 import { Injectable } from '@nestjs/common';
 import { CreateDepartementDto } from './dto/create-departement.dto';
 import { UpdateDepartementDto } from './dto/update-departement.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Departement } from './entities/departement.entity';
 
 @Injectable()
 export class DepartementService {
-  create(createDepartementDto: CreateDepartementDto) {
-    return 'This action adds a new departement';
+  constructor(
+    @InjectRepository(Departement)
+    private readonly departmentRepository: Repository<Departement>,
+  ) {}
+
+  async create(createDepartementDto: CreateDepartementDto) {
+    const department = this.departmentRepository.create(createDepartementDto);
+    return this.departmentRepository.save(department);
   }
 
-  findAll() {
-    return `This action returns all departement`;
+  async findAll(): Promise<Departement[]> {
+    return this.departmentRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} departement`;
+  async findOne(id: number): Promise<Departement> {
+    return this.departmentRepository.findOne({ where: { id } });
   }
 
-  update(id: number, updateDepartementDto: UpdateDepartementDto) {
-    return `This action updates a #${id} departement`;
+  async update(
+    id: number,
+    updateDepartementDto: UpdateDepartementDto,
+  ): Promise<Departement> {
+    await this.departmentRepository.update(id, updateDepartementDto);
+    return this.departmentRepository.findOne({ where: { id } });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} departement`;
+  async remove(id: number): Promise<void> {
+    await this.departmentRepository.delete(id);
   }
 }

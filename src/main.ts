@@ -8,7 +8,6 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const port = process.env.PORT || 3000;
   configDotenv();
-  console.log(process.env.PORT)
   const config = new DocumentBuilder()
     .setTitle('Your API')
     .setDescription('API description')
@@ -19,6 +18,6 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(3000);
+  await app.listen(port);
 }
 bootstrap();
