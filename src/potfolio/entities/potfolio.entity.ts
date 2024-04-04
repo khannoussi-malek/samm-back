@@ -5,13 +5,13 @@ export class Potfolio {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ default: '' })
   title: string;
 
-  @Column()
+  @Column({ default: '' })
   content: string;
 
-  @Column()
+  @Column({ default: '' })
   status: string;
 
   @Column()

@@ -1,21 +1,18 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
 export class News {
-  
-
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ default: '' })
   title: string;
 
-  @Column()
+  @Column({ default: '' })
   content: string;
 
-  @Column()
+  @Column({ default: false })
   visibility: boolean;
 
- 
   @Column()
   createdAt: Date;
 

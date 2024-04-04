@@ -4,9 +4,9 @@ export class Chapter {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ default: '' })
   name: string;
 
-  @Column()
+  @Column({ default: 0 })
   order: number;
 }

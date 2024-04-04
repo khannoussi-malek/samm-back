@@ -5,6 +5,6 @@ export class CourseFile {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ default: '' })
   name: string;
 }

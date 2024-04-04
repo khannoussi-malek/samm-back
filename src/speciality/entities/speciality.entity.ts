@@ -5,6 +5,6 @@ export class Speciality {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ default: '' })
   name: string;
 }

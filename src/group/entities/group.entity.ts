@@ -5,10 +5,10 @@ export class Group {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ default: '' })
   name: string;
 
-  @Column()
+  @Column({ default: '' })
   year: string;
 
   @Column()
