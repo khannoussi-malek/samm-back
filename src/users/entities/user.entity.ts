@@ -33,6 +33,6 @@ export class User {
   @Column({ nullable: true })
   role:'teacher' | 'Student'|'Admin';
 
-
+ 
 }
 

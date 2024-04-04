@@ -28,6 +28,15 @@ import { Major } from './major/entities/major.entity';
 import { Potfolio } from './potfolio/entities/potfolio.entity';
 import { Speciality } from './speciality/entities/speciality.entity';
 import { Subject } from './subject/entities/subject.entity';
+import { NewsModule } from './news/news.module';
+import { AdministrativeFileModule } from './administrative-file/administrative-file.module';
+import { GradeModule } from './grade/grade.module';
+import { TeacherScheduleModule } from './teacher-schedule/teacher-schedule.module';
+import { GroupScheduleModule } from './group-schedule/group-schedule.module';
+import { AdministrativeFile } from './administrative-file/entities/administrative-file.entity';
+import { Grade } from './grade/entities/grade.entity';
+import { News } from './news/entities/news.entity';
+import { TeacherSchedule } from './teacher-schedule/entities/teacher-schedule.entity';
 
 @Module({
   imports: [
@@ -38,6 +47,7 @@ import { Subject } from './subject/entities/subject.entity';
       username: 'postgres',
       password: 'Sirine',
       database: 'MiniProjetDB',
+      
       entities: [
         User,
         Chapter,
@@ -48,20 +58,14 @@ import { Subject } from './subject/entities/subject.entity';
         Potfolio,
         Speciality,
         Subject,
+        AdministrativeFile,
+        Grade,
+        News,
+        TeacherSchedule
       ],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([
-      User,
-      Chapter,
-      CourseFile,
-      Departement,
-      Group,
-      Major,
-      Potfolio,
-      Speciality,
-      Subject,
-    ]),
+    
     UserModule,
     SubjectModule,
     DepartementModule,
@@ -74,6 +78,11 @@ import { Subject } from './subject/entities/subject.entity';
 
     PotfolioModule,
     AuthModule,
+    NewsModule,
+    AdministrativeFileModule,
+    GradeModule,
+    TeacherScheduleModule,
+    GroupScheduleModule,
   ],
   controllers: [AppController],
   providers: [

@@ -34,13 +34,14 @@ export class UsersController {
   }
 
   @Get()
-  @Roles(Role.Admin) // Spécifie que seul un utilisateur avec le rôle Admin peut accéder à cette route
-  @UseGuards(RolesGuard)
+ 
   findAll() {
     return this.usersService.findAll();
   }
 
   @Get(':id')
+  @Roles(Role.Admin) // Spécifie que seul un utilisateur avec le rôle Admin peut accéder à cette route
+  @UseGuards(RolesGuard)
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(+id);
   }

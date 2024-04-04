@@ -57,5 +57,8 @@ export class CreateUserDto {
   @ApiProperty()
   
   role?:'teacher' | 'Student'|'Admin'
+
+
+  
 }
 
