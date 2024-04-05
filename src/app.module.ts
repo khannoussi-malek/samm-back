@@ -37,9 +37,12 @@ import { AdministrativeFile } from './administrative-file/entities/administrativ
 import { Grade } from './grade/entities/grade.entity';
 import { News } from './news/entities/news.entity';
 import { TeacherSchedule } from './teacher-schedule/entities/teacher-schedule.entity';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
+   
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
