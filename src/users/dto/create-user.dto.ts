@@ -2,12 +2,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
+  IsEnum,
   IsNotEmpty,
   IsOptional,
   IsPhoneNumber,
   IsString,
   MinLength,
+  isEnum,
 } from 'class-validator';
+import { Role } from 'src/auth/guards/roles.enum';
 
 export class CreateUserDto {
   @IsString()
@@ -52,13 +55,12 @@ export class CreateUserDto {
   
   passport?:string
    
-  @IsString()
+  @IsEnum(Role)
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty({enum:Role })
   
-  role?:'teacher' | 'Student'|'Admin'
-
+  role?:Role
 
   
 }
-
+ 

@@ -11,6 +11,7 @@ import { AuthService } from './auth.service';
 import { User } from 'src/users/entities/user.entity';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { Role } from './guards/roles.enum';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -42,10 +43,10 @@ export class AuthController {
   }
   @Post('signupstudent')
   async signupStudent(@Body() userSignupDto: CreateUserDto) {
-    return this.authService.signup(userSignupDto, 'Student');
+    return this.authService.signup(userSignupDto, Role.Student);
   }
   @Post('signupTeacher')
   async signupTeacher(@Body() userSignupDto: CreateUserDto) {
-    return this.authService.signup(userSignupDto, 'teacher');
+    return this.authService.signup(userSignupDto, Role.Teacher);
   }
 }

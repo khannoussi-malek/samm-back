@@ -5,6 +5,7 @@ import { UserService } from 'src/users/users.service';
 import * as jwt from 'jsonwebtoken';
 import { jwtConstants } from './strategies/constant';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { Role } from './guards/roles.enum';
 
 
 @Injectable()
@@ -37,7 +38,7 @@ export class AuthService {
             throw new UnauthorizedException('Invalid token');
         }
     }
-    async signup(userSignupDto: CreateUserDto,role:"teacher"|"Student"|"Admin") {
+    async signup(userSignupDto: CreateUserDto,role:Role) {
         if (role === 'teacher' || role === 'Student') {
             
             const existingUser = await this.userService.findByEmail(userSignupDto.email);
