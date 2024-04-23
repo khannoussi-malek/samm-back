@@ -3,7 +3,7 @@ import { CreateSubjectDto } from './dto/create-subject.dto';
 import { UpdateSubjectDto } from './dto/update-subject.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Subject } from './entities/subject.entity';
-import { Repository } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 
 @Injectable()
 export class SubjectService {
@@ -13,7 +13,13 @@ export class SubjectService {
   ) {}
 
   async create(createSubjectDto: CreateSubjectDto) {
-    const subject = this.subjectRepository.create(createSubjectDto);
+    const subjectData: DeepPartial<Subject> = {
+      name: createSubjectDto.name,
+      coef: createSubjectDto.coef,
+      type: createSubjectDto.type,
+      teacher: { id: createSubjectDto.teacher }, // Assuming teacher ID is provided in createSubjectDto
+    };
+    const subject = this.subjectRepository.create(subjectData);
     return this.subjectRepository.save(subject);
   }
 
@@ -29,7 +35,12 @@ export class SubjectService {
     id: number,
     updateSubjectDto: UpdateSubjectDto,
   ): Promise<Subject> {
-    await this.subjectRepository.update(id, updateSubjectDto);
+    const subjectPartial: DeepPartial<Subject> = {
+      name: updateSubjectDto.name,
+      coef: updateSubjectDto.coef,
+      type: updateSubjectDto.type,
+    };
+    await this.subjectRepository.update(id, subjectPartial);
     return this.subjectRepository.findOne({ where: { id } });
   }
 

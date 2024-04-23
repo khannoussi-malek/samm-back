@@ -13,9 +13,9 @@ export class News {
   @Column({ default: false })
   visibility: boolean;
 
-  @Column()
+  @Column({ nullable: true })
   createdAt: Date;
 
-  @Column()
+  @Column({ nullable: true })
   updatedAt: Date;
 }

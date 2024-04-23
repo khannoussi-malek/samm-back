@@ -1,5 +1,6 @@
 // user.entity.ts
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Subject } from 'src/subject/entities/subject.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
@@ -33,6 +34,8 @@ export class User {
   @Column({ nullable: true })
   role:'teacher' | 'Student'|'Admin';
 
+  @OneToMany(() => Subject, (subject) => subject.teacher)
+  subject: Subject[]
  
 }
 

@@ -16,4 +16,10 @@ export class CreateSubjectDto {
   @IsNotEmpty()
   @ApiProperty()
   type: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty()
+  teacher: number;
+  
 }

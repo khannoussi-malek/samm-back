@@ -12,8 +12,8 @@ export class NewsService {
     private readonly newsRepository: Repository<News>,
   ) {}
   async create(createNewsDto: CreateNewsDto): Promise<News> {
-    const user = this.newsRepository.create(createNewsDto);
-    return this.newsRepository.save(user);
+    const news = this.newsRepository.create(createNewsDto);
+    return this.newsRepository.save(news);
   }
   async findAll(): Promise<News[]> {
     return this.newsRepository.find();
