@@ -39,6 +39,7 @@ export class SubjectService {
       name: updateSubjectDto.name,
       coef: updateSubjectDto.coef,
       type: updateSubjectDto.type,
+      teacher: { id: updateSubjectDto.teacher },
     };
     await this.subjectRepository.update(id, subjectPartial);
     return this.subjectRepository.findOne({ where: { id } });

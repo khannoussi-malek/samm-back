@@ -1,5 +1,6 @@
+import { Chapter } from 'src/chapter/entities/chapter.entity';
 import { User } from 'src/users/entities/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Subject {
@@ -17,4 +18,7 @@ export class Subject {
 
   @ManyToOne(() => User, (user) => user.subject)
   teacher: User;
+
+  @OneToMany(()=> Chapter, chapter => chapter.subject)
+  chapters: Chapter[];
 }

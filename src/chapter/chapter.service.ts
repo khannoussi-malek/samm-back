@@ -3,7 +3,7 @@ import { CreateChapterDto } from './dto/create-chapter.dto';
 import { UpdateChapterDto } from './dto/update-chapter.dto';
 import { Chapter } from './entities/chapter.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 
 @Injectable()
 export class ChapterService {
@@ -13,7 +13,12 @@ export class ChapterService {
   ) {}
 
   async create(createChapterDto: CreateChapterDto) {
-    const chapter = this.chapterRepository.create(createChapterDto);
+    const chapterData: DeepPartial<Chapter> = {
+      name: createChapterDto.name,
+      order: createChapterDto.order,
+      subject: { id: createChapterDto.subject },
+    };
+    const chapter = this.chapterRepository.create(chapterData);
     return this.chapterRepository.save(chapter);
   }
 
@@ -29,7 +34,13 @@ export class ChapterService {
     id: number,
     updateChapterDto: UpdateChapterDto,
   ): Promise<Chapter> {
-    await this.chapterRepository.update(id, updateChapterDto);
+    const chapterPartial: DeepPartial<Chapter> = {
+      name: updateChapterDto.name,
+      order: updateChapterDto.order,
+      subject : { id: updateChapterDto.subject },
+    };
+
+    await this.chapterRepository.update(id, chapterPartial);
     return this.chapterRepository.findOne({ where: { id } });
   }
 

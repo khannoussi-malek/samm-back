@@ -11,4 +11,10 @@ export class CreateChapterDto {
   @IsNotEmpty()
   @ApiProperty()
   order: number;
+
+
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty()
+  subject: number;
 }
