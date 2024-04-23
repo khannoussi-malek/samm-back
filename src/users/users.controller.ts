@@ -8,6 +8,7 @@ import {
   InternalServerErrorException,
   Patch,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 
 import { CreateUserDto } from './dto/create-user.dto';
@@ -18,6 +19,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/auth/guards/roles.decorator';
 import { Role } from 'src/auth/guards/roles.enum';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { GetUserDto } from './dto/getUserDto.dto';
 
 @ApiTags('users')
 @Controller('users')
@@ -34,8 +36,10 @@ export class UsersController {
   }
 
   @Get()
- 
-  findAll() {
+  findAll(@Query() getUsersDto: GetUserDto) {
+    if (getUsersDto.role) {
+      return this.usersService.findAllByRole(getUsersDto);
+    }
     return this.usersService.findAll();
   }
 
