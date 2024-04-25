@@ -5,6 +5,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Subject } from './entities/subject.entity';
 import { DeepPartial, Repository } from 'typeorm';
 
+const relations = ['teacher', 'chapters'];
+
 @Injectable()
 export class SubjectService {
   constructor(
@@ -24,7 +26,7 @@ export class SubjectService {
   }
 
   async findAll(): Promise<Subject[]> {
-    return this.subjectRepository.find();
+    return this.subjectRepository.find({ relations });
   }
 
   async findOne(id: number): Promise<Subject> {

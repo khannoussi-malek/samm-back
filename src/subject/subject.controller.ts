@@ -16,7 +16,6 @@ import { ApiTags } from '@nestjs/swagger';
 export class SubjectController {
   constructor(private readonly subjectService: SubjectService) {}
 
-  
   @Post()
   create(@Body() createSubjectDto: CreateSubjectDto) {
     return this.subjectService.create(createSubjectDto);
