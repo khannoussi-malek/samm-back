@@ -6,6 +6,7 @@ export class TeacherSchedule {
 
   @Column({ default: '' })
   filename: string;
+  
   @Column('bytea', { nullable: true })
   data: Buffer;
   

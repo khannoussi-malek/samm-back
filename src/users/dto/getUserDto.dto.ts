@@ -8,3 +8,4 @@ export class GetUserDto {
   @ApiProperty({ enum: Role })
   role?: Role;
 }
+  

@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Speciality } from 'src/speciality/entities/speciality.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Major {
@@ -10,4 +11,7 @@ export class Major {
 
   @Column({ default: '' })
   plan: string;
+
+  @OneToMany(() => Speciality, (speciality) => speciality.major, { cascade: true, })
+    specialty: Speciality[];
 }

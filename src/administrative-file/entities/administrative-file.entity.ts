@@ -1,7 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "src/users/entities/user.entity";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 @Entity()
 export class AdministrativeFile {
-    @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
@@ -18,4 +19,8 @@ export class AdministrativeFile {
 
   @Column()
   updatedAt: Date;
+
+  @ManyToOne(() => User, (user) => user.administrativeFile)
+  student: User;
+
 }

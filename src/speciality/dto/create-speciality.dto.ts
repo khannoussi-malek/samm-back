@@ -6,4 +6,8 @@ export class CreateSpecialityDto {
   @IsNotEmpty()
   @ApiProperty()
   name: string;
+
+  
+
+
 }
