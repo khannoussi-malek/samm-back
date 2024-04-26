@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/users/entities/user.entity';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Departement {
@@ -13,4 +14,11 @@ export class Departement {
 
   @Column()
   updatedAt: Date;
+
+  @OneToOne(() => User)
+  headOfDepartment: User;
+
+  @Column({ nullable: true })
+  headOfDepartmentId: number;
+  
 }

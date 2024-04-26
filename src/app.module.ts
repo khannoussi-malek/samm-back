@@ -42,7 +42,6 @@ import { join } from 'path';
 
 @Module({
   imports: [
-   
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -50,7 +49,7 @@ import { join } from 'path';
       username: 'postgres',
       password: 'Sirine',
       database: 'MiniProjetDB',
-      
+
       entities: [
         User,
         Chapter,
@@ -64,11 +63,11 @@ import { join } from 'path';
         AdministrativeFile,
         Grade,
         News,
-        TeacherSchedule
+        TeacherSchedule,
       ],
       synchronize: true,
     }),
-    
+
     UserModule,
     SubjectModule,
     DepartementModule,

@@ -1,4 +1,17 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateDepartementDto } from './create-departement.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsDate, IsNotEmpty, IsString } from 'class-validator';
 
-export class UpdateDepartementDto extends PartialType(CreateDepartementDto) {}
+export class UpdateDepartementDto {
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  name: string;
+
+  @IsDate()
+  @ApiProperty()
+  createdAt?: Date;
+
+  @IsDate()
+  @ApiProperty()
+  updatedAt?: Date;
+}
