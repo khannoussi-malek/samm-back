@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/users/entities/user.entity';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Group {
@@ -11,9 +18,15 @@ export class Group {
   @Column({ default: '' })
   year: string;
 
-  @Column()
+  @Column({ nullable: true })
   createdAt: Date;
 
-  @Column()
+  @Column({ nullable: true })
   updatedAt: Date;
+
+  @ManyToMany((type) => User, (students) => students.groups, {
+    cascade: true,
+  })
+  @JoinTable()
+  students?: User[];
 }

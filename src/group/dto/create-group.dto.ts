@@ -1,24 +1,22 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsNotEmpty, IsString } from 'class-validator';
+import { IsDate, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateGroupDto {
   @IsString()
   @IsNotEmpty()
-  @ApiProperty()
+  @ApiProperty({
+    type: 'string',
+  })
   name: string;
 
   @IsString()
   @IsNotEmpty()
-  @ApiProperty()
+  @ApiProperty({
+    type: 'string',
+  })
   year: string;
 
-  @IsDate()
-  @IsNotEmpty()
+  @IsOptional()
   @ApiProperty()
-  createdAt: Date;
-
-  @IsDate()
-  @IsNotEmpty()
-  @ApiProperty()
-  updatedAt: Date;
+  students: number[];
 }

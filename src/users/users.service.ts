@@ -8,6 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { GetUserDto } from './dto/getUserDto.dto';
 
+const relations = ['subject', 'groups'];
 @Injectable()
 export class UserService {
   [x: string]: any;
@@ -22,11 +23,14 @@ export class UserService {
   }
 
   async findAll(): Promise<User[]> {
-    return this.userRepository.find();
+    return this.userRepository.find({ relations });
   }
 
   async findAllByRole(user: GetUserDto): Promise<User[]> {
-    return this.userRepository.find({ where: { role: user.role } });
+    return this.userRepository.find({
+      where: { role: user.role },
+      relations,
+    });
   }
 
   async findOne(id: number): Promise<User> {
