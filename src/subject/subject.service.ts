@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotAcceptableException } from '@nestjs/common';
 import { CreateSubjectDto } from './dto/create-subject.dto';
 import { UpdateSubjectDto } from './dto/update-subject.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Subject } from './entities/subject.entity';
 import { DeepPartial, Repository } from 'typeorm';
+import { UserService } from 'src/users/users.service';
 
 const relations = ['teacher', 'chapters'];
 
@@ -12,19 +13,26 @@ export class SubjectService {
   constructor(
     @InjectRepository(Subject)
     private readonly subjectRepository: Repository<Subject>,
+    private readonly userService: UserService,
   ) {}
 
   async create(createSubjectDto: CreateSubjectDto) {
-    const subjectData: DeepPartial<Subject> = {
-      name: createSubjectDto.name,
-      coef: createSubjectDto.coef,
-      type: createSubjectDto.type,
-      teacher: { id: createSubjectDto.teacher }, // Assuming teacher ID is provided in createSubjectDto
-    };
-    const subject = this.subjectRepository.create(subjectData);
-    return this.subjectRepository.save(subject);
+    // get user and verify if the user is a teatcher else show an error
+    const teacher = await this.userService.findOne(createSubjectDto.teacher);
+    if (teacher.role == 'teacher') {
+      // const user = await this.
+      const subjectData: DeepPartial<Subject> = {
+        name: createSubjectDto.name,
+        coef: createSubjectDto.coef,
+        type: createSubjectDto.type,
+        teacher: { id: createSubjectDto.teacher }, // Assuming teacher ID is provided in createSubjectDto
+      };
+      const subject = this.subjectRepository.create(subjectData);
+      return this.subjectRepository.save(subject);
+    } else {
+      throw new NotAcceptableException('not a teacher');
+    }
   }
-
   async findAll(): Promise<Subject[]> {
     return this.subjectRepository.find({ relations });
   }

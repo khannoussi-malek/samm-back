@@ -1,6 +1,14 @@
 // user.entity.ts
+import { AdministrativeFile } from 'src/administrative-file/entities/administrative-file.entity';
+import { Group } from 'src/group/entities/group.entity';
 import { Subject } from 'src/subject/entities/subject.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class User {
@@ -29,13 +37,14 @@ export class User {
   CIN: string;
 
   @Column({ nullable: true })
-  passport:string;
+  passport: string;
 
   @Column({ nullable: true })
-  role:'teacher' | 'Student'|'Admin';
+  role: 'teacher' | 'Student' | 'Admin';
 
   @OneToMany(() => Subject, (subject) => subject.teacher)
-  subject: Subject[]
- 
-}
+  subject?: Subject[];
 
+  @ManyToMany((type) => Group, (groups) => groups.students)
+  groups: Group[];
+}
