@@ -6,14 +6,4 @@ export class CreateDepartementDto {
   @IsNotEmpty()
   @ApiProperty()
   name: string;
-
-  @IsDate()
-  @IsNotEmpty()
-  @ApiProperty()
-  createdAt: Date;
-
-  @IsDate()
-  @IsNotEmpty()
-  @ApiProperty()
-  updatedAt: Date;
 }

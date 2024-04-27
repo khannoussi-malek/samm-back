@@ -17,15 +17,13 @@ export class SubjectService {
   ) {}
 
   async create(createSubjectDto: CreateSubjectDto) {
-    // get user and verify if the user is a teatcher else show an error
     const teacher = await this.userService.findOne(createSubjectDto.teacher);
     if (teacher.role == 'teacher') {
-      // const user = await this.
       const subjectData: DeepPartial<Subject> = {
         name: createSubjectDto.name,
         coef: createSubjectDto.coef,
         type: createSubjectDto.type,
-        teacher: { id: createSubjectDto.teacher }, // Assuming teacher ID is provided in createSubjectDto
+        teacher: { id: createSubjectDto.teacher },
       };
       const subject = this.subjectRepository.create(subjectData);
       return this.subjectRepository.save(subject);

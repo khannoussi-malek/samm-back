@@ -13,7 +13,12 @@ export class DepartementService {
   ) {}
 
   async create(createDepartementDto: CreateDepartementDto) {
-    const department = this.departmentRepository.create(createDepartementDto);
+    const preparDepartment = {
+      name: createDepartementDto.name,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    } as UpdateDepartementDto;
+    const department = this.departmentRepository.create(preparDepartment);
     return this.departmentRepository.save(department);
   }
 
