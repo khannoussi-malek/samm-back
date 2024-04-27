@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { UserService } from 'src/users/users.service';
+import { Repository } from 'typeorm';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Group } from './entities/group.entity';
-import { Repository } from 'typeorm';
-import { UserService } from 'src/users/users.service';
 
 const relations = ['subjects', 'students'];
 
@@ -17,8 +17,9 @@ export class GroupService {
   ) {}
 
   create(createGroupDto: CreateGroupDto) {
-    const { students, subjects, ...rest } = createGroupDto;
-    const group = this.groupRepository.create(rest);
+    createGroupDto.createdAt = new Date();
+    createGroupDto.updatedAt = new Date();
+    const group = this.groupRepository.create(createGroupDto);
     return this.groupRepository.save(group);
   }
 
