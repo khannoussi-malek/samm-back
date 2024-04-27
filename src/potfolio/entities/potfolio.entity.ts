@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/users/entities/user.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Potfolio {
@@ -25,4 +26,7 @@ export class Potfolio {
 
   @Column()
   updatedAt: Date;
+
+  @ManyToOne(() => User, (user) => user.portfolio)
+  student: User;
 }

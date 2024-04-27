@@ -1,6 +1,7 @@
 // user.entity.ts
 import { AdministrativeFile } from 'src/administrative-file/entities/administrative-file.entity';
 import { Group } from 'src/group/entities/group.entity';
+import { Potfolio } from 'src/potfolio/entities/potfolio.entity';
 import { Subject } from 'src/subject/entities/subject.entity';
 import {
   Column,
@@ -45,6 +46,9 @@ export class User {
   @OneToMany(() => Subject, (subject) => subject.teacher)
   subject?: Subject[];
 
-  @ManyToMany((type) => Group, (groups) => groups.students)
+  @ManyToMany(() => Group, (groups) => groups.students)
   groups: Group[];
+
+  @OneToMany(() => Potfolio, (portfolio) => portfolio.student)
+  portfolio?: Potfolio[];
 }
