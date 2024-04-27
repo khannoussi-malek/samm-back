@@ -1,12 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { UserService } from 'src/users/users.service';
+import { Repository } from 'typeorm';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Group } from './entities/group.entity';
-import { Repository } from 'typeorm';
-import { UserService } from 'src/users/users.service';
-import { User } from 'src/users/entities/user.entity';
-import { Role } from 'src/auth/guards/roles.enum';
+
+const relations = ['subjects', 'students'];
 
 @Injectable()
 export class GroupService {
@@ -17,13 +17,14 @@ export class GroupService {
   ) {}
 
   create(createGroupDto: CreateGroupDto) {
-    const { students, ...rest } = createGroupDto;
-    const group = this.groupRepository.create(rest);
+    createGroupDto.createdAt = new Date();
+    createGroupDto.updatedAt = new Date();
+    const group = this.groupRepository.create(createGroupDto);
     return this.groupRepository.save(group);
   }
 
   async findAll(): Promise<Group[]> {
-    return this.groupRepository.find();
+    return this.groupRepository.find({ relations });
   }
 
   async findOne(id: number): Promise<Group> {
@@ -41,11 +42,8 @@ export class GroupService {
     await this.groupRepository.update(id, rest);
     return this.groupRepository.findOne({ where: { id } });
   }*/
-  async updateGroupWithStudentList(
-    groupId: number,
-    updateGroupDto: UpdateGroupDto,
-  ) {
-    const { students, ...rest } = updateGroupDto;
+  async updateGroup(groupId: number, updateGroupDto: UpdateGroupDto) {
+    const { students, subjects, ...rest } = updateGroupDto;
 
     // Initialize the group object
     const group = await this.groupRepository.findOne({
@@ -54,21 +52,38 @@ export class GroupService {
       },
     });
 
-    if (!group) throw new Error('Group not found');
+    if (!group) throw new NotFoundException('Group not found');
 
     if (students?.length > 0) {
       // Create a new group instance with the updated properties
-      const updatedGroup = this.groupRepository.create({
+      const updatedGroup = await this.groupRepository.create({
         ...group,
         ...rest,
         students: students.map((id) => ({ id })),
       });
 
       // Save the updated group with students
-      await this.groupRepository.save(updatedGroup);
+      await this.groupRepository.save({ id: groupId, ...updatedGroup });
     } else {
       // Save the updated group without modifying the students
-      await this.groupRepository.save({
+      await this.groupRepository.update(groupId, {
+        ...group,
+        ...rest,
+      });
+    }
+    if (subjects?.length > 0) {
+      // Create a new group instance with the updated properties
+      const updatedGroup = this.groupRepository.create({
+        ...group,
+        ...rest,
+        subjects: subjects.map((id) => ({ id })),
+      });
+
+      // Save the updated group with students
+      await this.groupRepository.save({ id: groupId, ...updatedGroup });
+    } else {
+      // Save the updated group without modifying the students
+      await this.groupRepository.update(groupId, {
         ...group,
         ...rest,
       });

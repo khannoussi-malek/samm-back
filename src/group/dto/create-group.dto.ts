@@ -18,5 +18,9 @@ export class CreateGroupDto {
 
   @IsOptional()
   @ApiProperty()
-  students: number[];
+  createdAt?: Date;
+
+  @IsOptional()
+  @ApiProperty()
+  updatedAt?: Date;
 }
