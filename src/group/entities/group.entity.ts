@@ -1,3 +1,4 @@
+import { Subject } from 'src/subject/entities/subject.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
   Column,
@@ -29,4 +30,10 @@ export class Group {
   })
   @JoinTable()
   students?: User[];
+
+  @ManyToMany((type) => Subject, (subjects) => subjects.groups, {
+    cascade: true,
+  })
+  @JoinTable()
+  subjects?: Subject[];
 }

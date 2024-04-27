@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateGroupDto {
   @IsString()
@@ -18,5 +18,9 @@ export class CreateGroupDto {
 
   @IsOptional()
   @ApiProperty()
-  students: number[];
+  students?: number[];
+
+  @IsOptional()
+  @ApiProperty()
+  subjects?: number[];
 }
