@@ -1,3 +1,4 @@
+import { Major } from 'src/major/entities/major.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
   Column,
@@ -5,6 +6,7 @@ import {
   JoinColumn,
   JoinTable,
   ManyToMany,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -37,4 +39,7 @@ export class Departement {
     inverseJoinColumn: { name: 'user_id', referencedColumnName: 'id' },
   })
   teatching?: User[];
+
+  @OneToMany(() => Major, (major) => major.departement, { onDelete: 'CASCADE' })
+  majors: Major[];
 }

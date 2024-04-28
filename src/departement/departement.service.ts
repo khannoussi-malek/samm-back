@@ -6,6 +6,7 @@ import { UpdateDepartementDto } from './dto/update-departement.dto';
 import { Departement } from './entities/departement.entity';
 import { User } from 'src/users/entities/user.entity';
 import { UserService } from 'src/users/users.service';
+import { Major } from 'src/major/entities/major.entity';
 
 @Injectable()
 export class DepartementService {
@@ -24,6 +25,9 @@ export class DepartementService {
       })),
       createdAt: new Date(),
       updatedAt: new Date(),
+      majors: createDepartementDto.majors.map((major) => ({
+        id: +major,
+      })),
     };
     const department = this.departmentRepository.create(preparDepartment);
     return this.departmentRepository.save(department);
@@ -31,12 +35,15 @@ export class DepartementService {
 
   async findAll(): Promise<Departement[]> {
     return this.departmentRepository.find({
-      relations: ['headOfDepartment', 'teatching'],
+      relations: ['headOfDepartment', 'teatching', 'majors'],
     });
   }
 
   async findOne(id: number): Promise<Departement> {
-    return this.departmentRepository.findOne({ where: { id } });
+    return this.departmentRepository.findOne({
+      where: { id },
+      relations: ['headOfDepartment', 'teatching', 'majors'],
+    });
   }
 
   async update(
@@ -60,13 +67,16 @@ export class DepartementService {
           return this.userService.findOne(userId);
         }),
       ),
+      majors: updateDepartementDto.majors.map((major) => ({
+        id: +major,
+      })),
     };
 
     this.departmentRepository.manager.transaction(async (transaction) => {
       await transaction.save(User, updatedDepartement.teatching);
       await transaction.save(Departement, updatedDepartement);
+      await transaction.save(Major, updatedDepartement.majors);
     });
-    // await this.departmentRepository.update(id, updatedDepartement);
     return this.departmentRepository.findOne({ where: { id } });
   }
 

@@ -14,4 +14,8 @@ export class UpdateDepartementDto {
   @IsOptional()
   @ApiProperty()
   teatching?: number[];
+
+  @IsOptional()
+  @ApiProperty()
+  majors?: number[];
 }
