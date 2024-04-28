@@ -1,10 +1,12 @@
 // user.entity.ts
-import { AdministrativeFile } from 'src/administrative-file/entities/administrative-file.entity';
+import { Departement } from 'src/departement/entities/departement.entity';
 import { Group } from 'src/group/entities/group.entity';
 import { Subject } from 'src/subject/entities/subject.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
+  JoinTable,
   ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -24,7 +26,7 @@ export class User {
   @Column()
   email: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, unique: true })
   phone: string;
 
   @Column()
@@ -45,6 +47,14 @@ export class User {
   @OneToMany(() => Subject, (subject) => subject.teacher)
   subject?: Subject[];
 
-  @ManyToMany((type) => Group, (groups) => groups.students)
+  @ManyToMany(() => Group, (groups) => groups.students)
   groups: Group[];
+
+  @ManyToMany(() => Departement, (departement) => departement.id)
+  @JoinTable({
+    name: 'departement_teaching',
+    joinColumn: { name: 'user_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'departement_id', referencedColumnName: 'id' },
+  })
+  teatching?: Departement[];
 }
