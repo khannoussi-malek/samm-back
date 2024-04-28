@@ -41,5 +41,5 @@ export class Departement {
   teatching?: User[];
 
   @OneToMany(() => Major, (major) => major.departement, { onDelete: 'CASCADE' })
-  majors: Major[];
+  majors?: Major[];
 }

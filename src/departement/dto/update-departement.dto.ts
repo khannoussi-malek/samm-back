@@ -9,13 +9,13 @@ export class UpdateDepartementDto {
 
   @IsOptional()
   @ApiProperty()
-  headOfDepartmentId?: number;
+  headOfDepartmentId?: string;
 
   @IsOptional()
   @ApiProperty()
-  teatching?: number[];
+  teatching?: string[];
 
   @IsOptional()
   @ApiProperty()
-  majors?: number[];
+  majors?: string[];
 }
