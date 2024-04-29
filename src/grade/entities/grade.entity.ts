@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Subject } from 'src/subject/entities/subject.entity';
+import { User } from 'src/users/entities/user.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
 export class Grade {
   @PrimaryGeneratedColumn()
@@ -6,4 +8,13 @@ export class Grade {
 
   @Column({ default: 0 })
   grade: number;
+  
+  @Column()
+  type: string;
+  
+  @ManyToOne(()=> Subject, subject => subject.grades)
+  subject: Subject;
+  
+  @ManyToOne(()=> User, user => user.grades)
+  student: User;
 }
