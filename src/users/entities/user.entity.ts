@@ -1,6 +1,7 @@
 // user.entity.ts
 import { Departement } from 'src/departement/entities/departement.entity';
 import { Group } from 'src/group/entities/group.entity';
+import { Potfolio } from 'src/potfolio/entities/potfolio.entity';
 import { Subject } from 'src/subject/entities/subject.entity';
 import {
   Column,
@@ -50,6 +51,9 @@ export class User {
   @ManyToMany(() => Group, (groups) => groups.students)
   groups: Group[];
 
+  @OneToMany(() => Potfolio, (portfolio) => portfolio.student)
+  portfolio?: Potfolio[];
+  
   @ManyToMany(() => Departement, (departement) => departement.id)
   @JoinTable({
     name: 'departement_teaching',

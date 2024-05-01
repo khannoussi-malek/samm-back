@@ -30,6 +30,6 @@ export class Subject {
   @OneToMany(() => Chapter, (chapter) => chapter.subject)
   chapters: Chapter[];
 
-  @ManyToMany((type) => Group, (groups) => groups.subjects)
+  @ManyToMany(() => Group, (groups) => groups.subjects)
   groups: Group[];
 }
