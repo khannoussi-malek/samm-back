@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsNotEmpty, IsString } from 'class-validator';
+import { IsDate, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class UpdateDepartementDto {
   @IsString()
@@ -7,11 +7,15 @@ export class UpdateDepartementDto {
   @ApiProperty()
   name: string;
 
-  @IsDate()
+  @IsOptional()
   @ApiProperty()
-  createdAt?: Date;
+  headOfDepartmentId?: string;
 
-  @IsDate()
+  @IsOptional()
   @ApiProperty()
-  updatedAt?: Date;
+  teatching?: string[];
+
+  @IsOptional()
+  @ApiProperty()
+  majors?: string[];
 }
