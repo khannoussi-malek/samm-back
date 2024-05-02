@@ -14,11 +14,18 @@ export class UpdateService {
   async create(file: Express.Multer.File) {
     console.log('file', file);
 
-    const uploadFile = await new Update({
-      ...file,
-    });
+    const uploadFile = await new Update();
+    uploadFile.fieldname = file.fieldname;
+    uploadFile.originalname = file.originalname;
+    uploadFile.encoding = file.encoding;
+    uploadFile.mimetype = file.mimetype;
+    uploadFile.destination = file.destination;
+    uploadFile.filename = file.filename;
+    uploadFile.path = file.path;
+    uploadFile.size = file.size;
 
     return await this.repository.save(uploadFile);
+     
   }
 
   async findAll() {

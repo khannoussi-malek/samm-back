@@ -13,6 +13,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { UpdateUpdateDto } from './dto/update-update.dto';
 import { UpdateService } from './update.service';
 
+/*
 type File = {
   fieldname: string;
   originalname: string;
@@ -23,6 +24,7 @@ type File = {
   path: string;
   size: number;
 };
+*/
 
 @Controller('update')
 export class UpdateController {
