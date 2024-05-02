@@ -39,6 +39,8 @@ import { News } from './news/entities/news.entity';
 import { TeacherSchedule } from './teacher-schedule/entities/teacher-schedule.entity';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { FilesModule } from './files/files.module';
+import { UpdateModule } from './update/update.module';
 
 @Module({
   imports: [
@@ -75,9 +77,7 @@ import { join } from 'path';
     MajorModule,
     SpecialityModule,
     CourseFileModule,
-
     GroupModule,
-
     PotfolioModule,
     AuthModule,
     NewsModule,
@@ -85,6 +85,8 @@ import { join } from 'path';
     GradeModule,
     TeacherScheduleModule,
     GroupScheduleModule,
+    FilesModule,
+    UpdateModule,
   ],
   controllers: [AppController],
   providers: [
