@@ -36,7 +36,7 @@ export class SubjectService {
   }
 
   async findOne(id: number): Promise<Subject> {
-    return this.subjectRepository.findOne({ where: { id } });
+    return this.subjectRepository.findOne({ where: { id }, relations: ['grades', 'chapters', 'chapters.courseFiles'] });
   }
 
   async update(

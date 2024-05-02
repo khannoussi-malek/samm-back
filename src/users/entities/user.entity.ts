@@ -1,5 +1,6 @@
 // user.entity.ts
 import { Departement } from 'src/departement/entities/departement.entity';
+import { Grade } from 'src/grade/entities/grade.entity';
 import { Group } from 'src/group/entities/group.entity';
 import { Potfolio } from 'src/potfolio/entities/potfolio.entity';
 import { Subject } from 'src/subject/entities/subject.entity';
@@ -61,4 +62,7 @@ export class User {
     inverseJoinColumn: { name: 'departement_id', referencedColumnName: 'id' },
   })
   teatching?: Departement[];
+
+  @OneToMany(() => Grade, (grade) => grade.student)
+  grades?: Grade[]
 }
