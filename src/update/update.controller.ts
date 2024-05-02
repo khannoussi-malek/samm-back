@@ -6,12 +6,17 @@ import {
   Param,
   Patch,
   Post,
+  Res,
   UploadedFile,
   UseInterceptors,
+  NotFoundException
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UpdateUpdateDto } from './dto/update-update.dto';
 import { UpdateService } from './update.service';
+import * as path from 'path';
+import { Response } from 'express';
+import * as fs from 'fs';
 
 /*
 type File = {
@@ -45,18 +50,34 @@ export class UpdateController {
     return this.updateService.findAll();
   }
 
+
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.updateService.findOne(+id);
+async getFileById(@Param('id') id: number, @Res() res: Response) {
+  const file = await this.updateService.getFileById(id);
+
+  if (!file) {
+    throw new NotFoundException('File not found');
   }
 
+
+  res.set('Content-Type', file.mimetype);
+  return res.sendFile(file.filename, { root: './uploads' });
+}
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUpdateDto: UpdateUpdateDto) {
     return this.updateService.update(+id, updateUpdateDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.updateService.remove(+id);
+  async deleteFileById(@Param('id') id: number) {
+    const file = await this.updateService.getFileById(id);
+  
+    if (!file) {
+      throw new NotFoundException('File not found');
+    }
+  
+    await this.updateService.deleteFile(file);
+    return { message: 'File deleted successfully' };
   }
+  
 }

@@ -40,9 +40,14 @@ import { TeacherSchedule } from './teacher-schedule/entities/teacher-schedule.en
 import { TeacherScheduleModule } from './teacher-schedule/teacher-schedule.module';
 import { Update } from './update/entities/update.entity';
 import { UpdateModule } from './update/update.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'uploads'),
+    }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
