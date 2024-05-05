@@ -7,7 +7,6 @@ export class CreateSubjectDto {
   @ApiProperty()
   name: string;
 
-  @IsNumber()
   @IsNotEmpty()
   @ApiProperty()
   coef: number;
@@ -21,5 +20,5 @@ export class CreateSubjectDto {
   @IsNotEmpty()
   @ApiProperty()
   teacher: number;
-  
+
 }

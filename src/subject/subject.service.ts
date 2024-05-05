@@ -14,14 +14,14 @@ export class SubjectService {
     @InjectRepository(Subject)
     private readonly subjectRepository: Repository<Subject>,
     private readonly userService: UserService,
-  ) {}
+  ) { }
 
   async create(createSubjectDto: CreateSubjectDto) {
     const teacher = await this.userService.findOne(createSubjectDto.teacher);
     if (teacher.role == 'teacher') {
       const subjectData: DeepPartial<Subject> = {
         name: createSubjectDto.name,
-        coef: createSubjectDto.coef,
+        coef: +createSubjectDto.coef,
         type: createSubjectDto.type,
         teacher: { id: createSubjectDto.teacher },
       };
