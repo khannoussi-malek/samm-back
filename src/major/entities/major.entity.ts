@@ -1,5 +1,12 @@
 import { Departement } from 'src/departement/entities/departement.entity';
-import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Update } from 'src/update/entities/update.entity';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Major {
@@ -9,9 +16,11 @@ export class Major {
   @Column({ default: '' })
   name: string;
 
-  @Column({ default: '' })
-  plan: string;
-
-  @ManyToOne(() => Departement, (departement) => departement.id, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Departement, (departement) => departement.id, {
+    onDelete: 'CASCADE',
+  })
   departement: Departement;
+
+  @OneToOne(() => Update, (update) => update.id)
+  plan: Update;
 }

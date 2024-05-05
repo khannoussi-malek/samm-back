@@ -1,6 +1,13 @@
 import { Subject } from 'rxjs';
 import { Chapter } from 'src/chapter/entities/chapter.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Update } from 'src/update/entities/update.entity';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class CourseFile {
@@ -13,7 +20,9 @@ export class CourseFile {
   @Column({ default: '' })
   type: string;
 
-  @ManyToOne(() => Chapter, chapter => chapter.courseFiles)
-  chapter: Chapter
+  @ManyToOne(() => Chapter, (chapter) => chapter.courseFiles)
+  chapter: Chapter;
 
+  @OneToOne(() => Update, (update) => update.id)
+  file: Update;
 }

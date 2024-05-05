@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
+import { Update } from 'src/update/entities/update.entity';
 
 export class CreateMajorDto {
   @IsString()
@@ -7,8 +8,6 @@ export class CreateMajorDto {
   @ApiProperty()
   name: string;
 
-  @IsString()
-  @IsNotEmpty()
   @ApiProperty()
-  plan: string;
+  plan: Update;
 }
