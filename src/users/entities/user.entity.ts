@@ -1,4 +1,3 @@
-// user.entity.ts
 import { Departement } from 'src/departement/entities/departement.entity';
 import { Grade } from 'src/grade/entities/grade.entity';
 import { Group } from 'src/group/entities/group.entity';
@@ -7,7 +6,6 @@ import { Subject } from 'src/subject/entities/subject.entity';
 import {
   Column,
   Entity,
-  JoinColumn,
   JoinTable,
   ManyToMany,
   OneToMany,
@@ -46,15 +44,15 @@ export class User {
   @Column({ nullable: true })
   role: 'teacher' | 'Student' | 'Admin';
 
-  @OneToMany(() => Subject, (subject) => subject.teacher)
-  subject?: Subject[];
+  @OneToMany(() => Subject, subject => subject.teacher)
+subject: Subject[];
 
   @ManyToMany(() => Group, (groups) => groups.students)
+  @JoinTable()
   groups: Group[];
 
   @OneToMany(() => Potfolio, (portfolio) => portfolio.student)
   portfolio?: Potfolio[];
-  
   @ManyToMany(() => Departement, (departement) => departement.id)
   @JoinTable({
     name: 'departement_teaching',

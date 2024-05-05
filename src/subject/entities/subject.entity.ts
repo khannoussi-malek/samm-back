@@ -1,3 +1,4 @@
+import { IsOptional } from 'class-validator';
 import { Chapter } from 'src/chapter/entities/chapter.entity';
 import { Grade } from 'src/grade/entities/grade.entity';
 import { Group } from 'src/group/entities/group.entity';
@@ -28,8 +29,9 @@ export class Subject {
   @ManyToOne(() => User, (user) => user.subject)
   teacher: User;
 
+  @IsOptional()
   @OneToMany(() => Chapter, (chapter) => chapter.subject)
-  chapters: Chapter[];
+  chapters?: Chapter[];
   
   @OneToMany(() => Grade, (grade) => grade.subject)
   grades: Grade[];

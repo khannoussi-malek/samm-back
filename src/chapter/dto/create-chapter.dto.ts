@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString, IsIn } from 'class-validator';
 
 export class CreateChapterDto {
   @IsString()
@@ -12,6 +12,11 @@ export class CreateChapterDto {
   @ApiProperty()
   order: number;
 
+  @IsString()
+  @IsNotEmpty()
+  @IsIn(['TD', 'TP', 'Cours'])
+  @ApiProperty({ enum: ['TD', 'TP', 'Cours'] })
+  type: 'TD' | 'TP' | 'Cours';
 
   @IsNumber()
   @IsNotEmpty()

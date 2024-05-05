@@ -9,6 +9,8 @@ import {
   Patch,
   UseGuards,
   Query,
+  Put,
+  NotFoundException,
 } from '@nestjs/common';
 
 import { CreateUserDto } from './dto/create-user.dto';
@@ -50,14 +52,12 @@ export class UsersController {
     return this.usersService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateUserDto: UpdateUserDto,
-  ): Promise<User> {
-    return this.usersService.update(+id, updateUserDto);
-  }
-
+  @Put(':id')
+  async updateUserWithSubjects(@Param('id') id: string, @Body() updateUserDto: Partial<User>) {
+    const user = await this.usersService.updateUserWithSubjects(Number(id), updateUserDto);
+    return user;
+  } 
+ 
   //@Put(':id')
   //async update(@Param('id') id: string, @Body() updateUserDto: CreateUserDto): Promise<User> {
   // return this.usersService.update(+id, updateUserDto);
